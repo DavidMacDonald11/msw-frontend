@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "https://davids-minecraft-server-api.vercel.app/api/$1"
+        }
+    ]
+}
