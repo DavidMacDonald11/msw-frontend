@@ -3,7 +3,7 @@ SHELL := /bin/zsh
 
 .PHONY: run
 run:
-	npm start
+	npm run dev
 
 .PHONY: deploy
 deploy:
