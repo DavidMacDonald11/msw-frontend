@@ -7,6 +7,11 @@
 
   const wake = async () => {
     try {
+      status.update(self => {
+        self.waiting = true
+        return self
+      })
+
       await api("post", "/api/query/wake")
       await updater.run()
     } catch (error) {
@@ -21,7 +26,7 @@
 
 {#if $status.waiting}
   <div class="flex-item">
-    <h3>Waiting for wake...</h3>
+    <h3>The host computer is waking up...</h3>
   </div>
 {/if}
 
