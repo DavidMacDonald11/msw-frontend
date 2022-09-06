@@ -41,7 +41,7 @@ const updater = {
     updater.clear()
 
     try {
-      const res = await api("get", "/api/query/status")
+      const res = await api("post", "/api/query/status")
       res.state.ip = res.ip
 
       servers.update(() => res.servers)
