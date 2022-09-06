@@ -5,8 +5,7 @@
   import LoginForm from "./components/forms/LoginForm.svelte"
 
   let focus = null
-
-  let user = {loggedIn: false}
+  let user = JSON.parse(localStorage.getItem("user")) || {loggedIn: false}
 
   onMount(() => {
     if (focus !== null) focus.focus()

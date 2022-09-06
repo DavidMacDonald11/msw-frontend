@@ -1,16 +1,22 @@
 import api from "./lib/api"
 import { writable } from "svelte/store"
 
-const servers = writable([])
+function newLocalStore(key, defaultValue) {
+  const store = writable(JSON.parse(localStorage.getItem(key)) || defaultValue)
+  store.subscribe(value => { localStorage.setItem(key, JSON.stringify(value)) })
+  return store
+}
 
-const state = writable({
+const servers = newLocalStore("servers", [])
+
+const state = newLocalStore("state", {
   clock: 0,
   delaySeconds: 30,
   totalMinutes: 15,
   ip: null
 })
 
-const status = writable({
+const status = newLocalStore("status", {
   failed: false,
   waiting: false,
   isOn: false,
@@ -41,6 +47,7 @@ const updater = {
       servers.update(() => res.servers)
       state.update(() => res.state)
       status.update(() => res.status)
+
       updaterStore.update(self => {
         self.failed = false
         return self
@@ -48,6 +55,7 @@ const updater = {
     } catch (error) {
       updaterStore.update(self => {
         self.failed = true
+        console.log(error)
         return self
       })
     } finally {
