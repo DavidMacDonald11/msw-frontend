@@ -1,11 +1,25 @@
 import api from "./lib/api"
 import { writable } from "svelte/store"
 
-function newLocalStore(key, defaultValue) {
-  const store = writable(JSON.parse(localStorage.getItem(key)) || defaultValue)
-  store.subscribe(value => { localStorage.setItem(key, JSON.stringify(value)) })
+function newStore(location, key, defaultValue) {
+  const store = writable(JSON.parse(location.getItem(key)) || defaultValue)
+  store.subscribe(value => { location.setItem(key, JSON.stringify(value)) })
   return store
 }
+
+function newSessionStore(key, defaultValue) {
+  return newStore(sessionStorage, key, defaultValue)
+}
+
+function newLocalStore(key, defaultValue) {
+  return newStore(localStorage, key, defaultValue)
+}
+
+const user = newSessionStore("user", {
+  name: null,
+  loggedIn: false,
+  token: null
+})
 
 const servers = newLocalStore("servers", [])
 
@@ -53,9 +67,10 @@ const updater = {
         return self
       })
     } catch (error) {
+      console.log(error)
+
       updaterStore.update(self => {
         self.failed = true
-        console.log(error)
         return self
       })
     } finally {
@@ -67,4 +82,4 @@ const updater = {
   }
 }
 
-export { servers, state, status, updater }
+export { user, servers, state, status, updater }

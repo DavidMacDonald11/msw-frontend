@@ -1,11 +1,12 @@
 <script>
-  export let user
+  import {user} from "../stores"
 
   const logout = () => {
-    user.loggedIn = false
-    user.token = null
-
-    localStorage.setItem("user", JSON.stringify(user))
+    user.update(() => ({
+      name: null,
+      loggedIn: false,
+      token: null
+    }))
   }
 </script>
 
@@ -14,10 +15,10 @@
   <div class="flex-item">
     <h1>David's Minecraft Server Manager</h1>
   </div>
-  {#if user.loggedIn}
+  {#if $user.loggedIn}
     <div class="flex-item account-info">
       <h5>Account:</h5>
-      <h6 class="name">{user.name}</h6>
+      <h6 class="name">{$user.name}</h6>
       <button on:click={logout}>Logout</button>
     </div>
   {/if}

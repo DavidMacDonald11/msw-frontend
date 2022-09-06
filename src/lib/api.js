@@ -1,9 +1,9 @@
 import axios from "axios"
 
 async function api(method, url, data = undefined) {
-  const user = JSON.parse(localStorage.getItem("user"))
-
   try {
+    const user = JSON.parse(sessionStorage.getItem("user"))
+
     const res = await axios({
       method,
       url,
@@ -13,7 +13,7 @@ async function api(method, url, data = undefined) {
 
     return res.data
   } catch (error) {
-    throw error.response.data.error
+    throw error.response?.data.error || error
   }
 }
 

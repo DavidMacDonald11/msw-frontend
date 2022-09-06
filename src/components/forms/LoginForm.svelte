@@ -1,10 +1,10 @@
 <script>
   import axios from "axios"
+  import {user} from "../../stores"
   import Error from "../Error.svelte"
   import AuthForm from "./AuthForm.svelte"
 
   export let focus
-  export let user
 
   let failed = false
 
@@ -12,13 +12,11 @@
     try {
       const res = await axios.post("/api/auth/login", form)
 
-      user = {
-        loggedIn: true,
+      user.update(() => ({
         name: form.username,
+        loggedIn: true,
         token: res.data.token
-      }
-
-      localStorage.setItem("user", JSON.stringify(user))
+      }))
 
       failed = false
     } catch (error) {

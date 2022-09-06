@@ -1,11 +1,11 @@
 <script>
   import {onMount} from "svelte"
+  import {user} from "./stores"
   import Titlebar from "./components/Titlebar.svelte"
   import Home from "./components/Home.svelte"
   import LoginForm from "./components/forms/LoginForm.svelte"
 
   let focus = null
-  let user = JSON.parse(localStorage.getItem("user")) || {loggedIn: false}
 
   onMount(() => {
     if (focus !== null) focus.focus()
@@ -13,10 +13,10 @@
 </script>
 
 <main>
-  <Titlebar bind:user />
+  <Titlebar />
   <div class="flex-container">
-    {#if !user.loggedIn}
-      <LoginForm bind:focus bind:user />
+    {#if !$user.loggedIn}
+      <LoginForm bind:focus />
     {:else}
       <Home />
     {/if}
