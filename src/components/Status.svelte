@@ -1,9 +1,9 @@
 <script>
-  import {state, status, updater} from "../stores"
+  import {hostState, status, updater} from "../stores"
   import api from "../lib/api"
   import Error from "./Error.svelte"
 
-  $: minutesLeft = $state.totalMinutes - ($state.clock * $state.delaySeconds) / 60.0
+  $: minutesLeft = $hostState.totalMinutes - ($hostState.clock * $hostState.delaySeconds) / 60.0
 
   const wake = async () => {
     try {

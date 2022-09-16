@@ -1,12 +1,12 @@
 <script>
   import api from "../../lib/api"
-  import {state, status, updater} from "../../stores"
+  import {hostState, status, updater} from "../../stores"
 
   export let server
 
   const getIp = server => {
     const port = server.public.port
-    return port == 25565 ? $state.ip : `${$state.ip}:${port}`
+    return port == 25565 ? $hostState.ip : `${$hostState.ip}:${port}`
   }
 
   const startServer = async server => {

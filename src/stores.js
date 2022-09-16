@@ -23,7 +23,7 @@ const user = newSessionStore("user", {
 
 const servers = newLocalStore("servers", [])
 
-const state = newLocalStore("state", {
+const hostState = newLocalStore("hostState", {
   clock: 0,
   delaySeconds: 30,
   totalMinutes: 15,
@@ -56,10 +56,10 @@ const updater = {
 
     try {
       const res = await api("post", "/api/query/status")
-      res.state.ip = res.ip
+      res.hostState.ip = res.ip
 
       servers.update(() => res.servers)
-      state.update(() => res.state)
+      hostState.update(() => res.hostState)
       status.update(() => res.status)
 
       updaterStore.update(self => {
@@ -82,4 +82,4 @@ const updater = {
   }
 }
 
-export { user, servers, state, status, updater }
+export { user, servers, hostState, status, updater }

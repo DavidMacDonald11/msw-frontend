@@ -17,9 +17,9 @@
 </div>
 
 <style>
-  .flex-item.server {
+  .server {
     background-color: #ddfcee;
-    border: 1px solid;
+    border: 1px solid black;
     border-radius: 8px;
     margin: 20px;
   }
