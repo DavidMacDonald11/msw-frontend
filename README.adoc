@@ -1,0 +1,48 @@
+= Minecraft Server Website Frontend
+
+:backend-link: https://github.com/DavidMacDonald11/msw-backend
+:local-api-link: https://github.com/DavidMacDonald11/msw-local-api
+:datapack-link: https://github.com/DavidMacDonald11/idle-timeout-datapack
+:wol-link: https://en.wikipedia.org/wiki/Wake-on-LAN
+:ssh-link: https://en.wikipedia.org/wiki/Secure_Shell
+:rcon-link: https://sage-advices.com/what-is-rcon-on-minecraft/
+:vercel-link: https://vercel.com
+
+== The Minecraft Server Website Toolkit
+This is part of a three-part system designed to automate a minecraft server using a website. Also see:
+
+* {backend-link}[The Website Backend]
+* {local-api-link}[The Local API]
+* {datapack-link}[The Idle Timeout Datapack]
+
+This was developed for my own personal use. The system I've designed is very unique to my scenario, so it may not be easy to directly replicate. I also have no intention of implementing features that I will never actaully use. That said, it may still be worth asking for features, as I may find use in them.
+
+Otherwise, feel free to edit this project however you need to for it to suit your needs. If you would like pointers to help you do so, feel free to ask.
+
+== System Structure
+. The Frontend Server
+.. This is the website users will actually interact with.
+.. It will send http requests to the backend for authentication and data management.
+. The Backend Server
+.. Handles website authentication and remotely controls the host.
+.. The server uses {ssh-link}[SSH] to access a raspberry pi to use {wol-link}[WoL] to wake up the host machine. This is to save power. Compared to a complete host machine, a raspberry pi uses far less power. Using a raspberry pi allows WoL from outside of the local network.
+.. The server uses SSH to interact with the local API on the host.
+. The Local API
+.. Shuts down the host machine after 15 minutes of inactivity.
+.. Starts the Minecraft servers.
+.. Uses *local-network only* {rcon-link}[RCON] to send commands to the server. Allows the local api to keep track of players and time left.
+. The Idle Timeout Datapack
+.. Each server will have this datapack installed.
+.. If no one is online, the server will shutdown after 30 minutes.
+.. Allows the local api to keep track of players online.
+
+== Instructions
+. Follow these {backend-link}/#Instructions[instructions] to set up the backend and local api.
+. Fork this project and create a new Vercel project using that repo, or install the Vercel command-line tool, download this repo, and run `vercel`.
+. Edit `vercel.json` and, with `[URL]` being the URL of your deployed backend, and set `"destination": "[URL]/api/$1"`
+. Deploy these changes to Vercel.
+
+== Accounts
+There are only meant to be one or two accounts used with this. The more accounts there are, the more vulnerable your system is. You can set an admin account to modify your servers using the website, as well as make new accounts.
+
+Details comming soon.
